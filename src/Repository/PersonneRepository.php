@@ -33,6 +33,15 @@ class PersonneRepository extends ServiceEntityRepository
         return $pers;
     }
 
+    public function findByNomPrenomDateNaiss($nom, $prenom, $dateNaiss) {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.nom = :nom AND p.prenom = :prenom AND p.dateNaissance = :dateNaiss')
+            ->setParameter('nom', $nom)
+            ->setParameter('prenom', $prenom)
+            ->setParameter('dateNaiss', $dateNaiss)
+            ->getQuery()
+            ->getResult();
+    }
 
     // /**
     //  * @return Personne[] Returns an array of Personne objects

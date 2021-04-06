@@ -35,6 +35,10 @@ class PersonneController extends AbstractController
         $prenom = $request->get("prenom");
         $dateNaissance = $request->get("dateNaissance");
 
+        $p = $this->persRepository->findByNomPrenomDateNaiss($nom, $prenom, $dateNaissance);
+        if($p) {
+            return new JsonResponse(["pers" => "Personne déjà existante"], Response::HTTP_BAD_REQUEST);
+        }
         $dn = new \DateTime(($dateNaissance));
         $now = new \DateTime(date("Y-m-d"));
         $age = date_diff($now, $dn);
